@@ -39,7 +39,10 @@ public class SearchResultsPage extends BasePage {
     private List<WebElementFacade> listOfProperties;
 
     @FindBy(css = "div[style*='z-index: 9999'] button")
-    private WebElement activePropertyOnMap;
+    private WebElementFacade activePropertyOnMap;
+
+    @FindBy(xpath = "//*[@aria-label='Map']")
+    private WebElementFacade mapArea;
 
     public String getTopSelectedLocation() {
         waitFor(topLocationButton);
@@ -111,14 +114,14 @@ public class SearchResultsPage extends BasePage {
     }
 
     private String getPropertyDisplayedNameFromModal(String propertyName) {
-        return getDriver()
-                .findElement(By.xpath("//*[@aria-label='Map']//a[@aria-label='" + propertyName + "'][@rel]/../div[2]//span[contains(@style, 'display')]"))
+        return mapArea
+                .findElement(By.xpath("//a[@aria-label='" + propertyName + "'][@rel]/../div[2]//span[contains(@style, 'display')]"))
                 .getText();
     }
 
     private String getPropertyDisplayedPriceFromModal(String propertyName) {
-        return getDriver()
-                .findElement(By.xpath("//*[@aria-label='Map']//a[@aria-label='" + propertyName + "'][@rel]/../div[2]//div[@aria-hidden]/span[1]"))
+        return mapArea
+                .findElement(By.xpath("//a[@aria-label='" + propertyName + "'][@rel]/../div[2]//div[@aria-hidden]/span[1]"))
                 .getText();
     }
 
