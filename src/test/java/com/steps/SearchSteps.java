@@ -1,6 +1,7 @@
 package com.steps;
 
 import com.pages.HomePage;
+import com.pages.PropertyPage;
 import com.pages.SearchResultsPage;
 import net.serenitybdd.core.Serenity;
 import net.thucydides.core.annotations.Step;
@@ -12,6 +13,7 @@ public class SearchSteps {
 
     private HomePage homePage;
     private SearchResultsPage searchResultsPage;
+    private PropertyPage propertyPage;
 
     @Step
     public void openHomepage() {
@@ -123,6 +125,22 @@ public class SearchSteps {
     @Step
     public void getPropertyNameAndPrice() {
         Serenity.getCurrentSession().put("property", searchResultsPage.getPropertyDetails(0));
+    }
+
+    @Step
+    public void searchForPropertyWithLowestPrice() {
+        Serenity.getCurrentSession().put("lowestProperty", searchResultsPage.getLowestPricePropertyDetails());
+       searchResultsPage.hoverOverLowestProperty();
+       searchResultsPage.clickActivePropertyOnMap();
+       searchResultsPage.clickDisplayedNameFromMapModal();
+        searchResultsPage.switchToNewWindow();
+    }
+
+    @Step
+    public void verifyDetailsOnPropertyPage(){
+        String expexted = Serenity.getCurrentSession().get("lowestProperty").toString();
+        String actual = propertyPage.getPagePropertyDetails().toString();
+        assertEquals(expexted, actual);
     }
 
 }

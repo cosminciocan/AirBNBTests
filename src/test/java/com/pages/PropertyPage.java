@@ -1,5 +1,6 @@
 package com.pages;
 
+import com.entity.Property;
 import com.utils.BasePage;
 import net.serenitybdd.core.annotations.findby.FindBy;
 import net.serenitybdd.core.pages.WebElementFacade;
@@ -18,6 +19,12 @@ public class PropertyPage extends BasePage {
     @FindBy(xpath = "//div[@class='_aujnou']/div[.='Pool']")
     private WebElementFacade poolAmenitiesLabel;
 
+    @FindBy(css = "[data-section-id='TITLE_DEFAULT'] h1")
+    private WebElementFacade pageTitle;
+
+    @FindBy(xpath = "//div[@data-section-id=\"BOOK_IT_SIDEBAR\"]//span/span[contains(.,'lei ')][@aria-hidden='true']")
+    private WebElementFacade pricePerNightLabel;
+
 
     public boolean verifyAmenityInList(String amenity) {
         Assert.assertTrue(listOfAmenities.size() != 0);
@@ -35,5 +42,14 @@ public class PropertyPage extends BasePage {
     public boolean checkIfPoolIsDisplayed() {
         waitFor(poolAmenitiesLabel);
         return poolAmenitiesLabel.isDisplayed();
+    }
+
+
+    public Property getPagePropertyDetails(){
+        Property property = new Property();
+        property.setName(pageTitle.getText());
+//        property.setPricePerNight(pricePerNightLabel.getText());
+        return property;
+
     }
 }

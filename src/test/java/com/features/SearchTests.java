@@ -23,6 +23,16 @@ public class SearchTests extends BaseTest {
         steps.verifyPropertiesMinimumNumberOfGuests();
     }
 
+    @Test
+    public void searchForPropertiesAndOpenThemFromMap(){
+        steps.openHomepage();
+        steps.performSearchForRomeWithGuests();
+        steps.searchForPropertyWithLowestPrice();
+        steps.verifyDetailsOnPropertyPage();
+
+
+    }
+
 
 
 
